@@ -1,8 +1,23 @@
 
-Use these commands in terminal to create this project:
+# Use these commands in terminal to create this project:
 
 django-admin startproject djadmin_config .
+
+mkdir -p config/static
 
 mkdir -p djapp/djapp_import_export
 
 python manage.py startapp djapp_import_export djapp/djapp_import_export
+
+# create PostgreSQL database
+
+sudo -u postgres createuser --createdb djimpexpdbadmin --pwprompt
+
+sudo -u postgres psql
+
+create database dbimpexp owner djimpexpdbadmin;
+
+GRANT ALL PRIVILEGES ON DATABASE dbimpexp TO djimpexpdbadmin;
+
+\q
+

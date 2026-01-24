@@ -11,6 +11,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+## add lines to make use of python-dotenv package: pip install python-dotenv
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+# some settings are required only for development
+IS_DEVELOPMENT = True
+IS_USING_DJDT = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j%^v223ja)zm1*uq$^$l38hgghk2ciiii297)ul4&!!(m0bzyi'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,16 +38,56 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    ## add humanize package
+    'django.contrib.humanize',
 ]
 
-MIDDLEWARE = [
+# project apps
+APPLICATION_APPS = [
+    'djapp.djapp_import_export.apps.DjappImportExportConfig',
+]
+
+THIRD_PARTY_APPS = [
+    'widget_tweaks',
+    'taggit',
+]
+
+if IS_USING_DJDT:
+    DEBUG_APPS = [
+        "debug_toolbar",
+    ]
+else:
+    DEBUG_APPS = []
+
+if IS_DEVELOPMENT:
+    ### development apps
+    INSTALLED_APPS = DJANGO_APPS + APPLICATION_APPS + THIRD_PARTY_APPS + DEBUG_APPS
+else:
+    ### deployment apps
+    INSTALLED_APPS = DJANGO_APPS + APPLICATION_APPS + THIRD_PARTY_APPS
+
+# end Application definition
+
+
+# Middleware definition
+
+if IS_USING_DJDT:
+    DEBUG_MIDDLEWARE = [
+        # for django debug toolbar:
+        # The order of MIDDLEWARE is important. You should include the Debug Toolbar middleware as early as possible in the list. However, it must come after any other middleware that encodes the response’s content, such as GZipMiddleware.
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+else:
+    DEBUG_MIDDLEWARE = []
+
+DJANGO_MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,12 +97,22 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if IS_DEVELOPMENT:
+    ### development middleware
+    MIDDLEWARE = DEBUG_MIDDLEWARE + DJANGO_MIDDLEWARE
+else:
+    ### deployment middleware
+    MIDDLEWARE = DJANGO_MIDDLEWARE
+
+# end Middleware definition
+
+
 ROOT_URLCONF = 'djadmin_config.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,9 +132,13 @@ WSGI_APPLICATION = 'djadmin_config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE'    : os.getenv('PDB_ENGINE'),
+        'NAME'      : os.getenv('PDB_NAME'),
+        'USER'      : os.getenv('PDB_USER'),
+        'PASSWORD'  : os.getenv('PDB_PASSWORD'),
+        'HOST'      : os.getenv('PDB_HOST'),
+        'PORT'      : os.getenv('PDB_PORT'),
+    },
 }
 
 
@@ -104,7 +166,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Hong_Kong'
 
 USE_I18N = True
 
@@ -114,9 +177,62 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+## after creating the 'static' folder under config,
+## add lines to define more paths.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'config/static'),
+]
+
+## original line:
+# STATIC_URL = 'static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+## add a location for photos jpg files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+## add a location for default data files
+DEFAULT_DATA_ROOT = os.path.join(BASE_DIR, 'default_data')
+
+
+## set project level date string format
+DATE_STRING_FORMAT = '%Y-%m-%d'
+
+
+### The Debug Toolbar is shown only if your IP address is listed in Django’s INTERNAL_IPS setting. This means that for local development, you must add "127.0.0.1" to INTERNAL_IPS. You’ll need to create this setting if it doesn’t already exist in your settings module:
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+### add message tags to match bootstrap classes
+from django.contrib.messages import constants as djmsg_const
+MESSAGE_TAGS = {
+    djmsg_const.ERROR   : 'danger',
+    djmsg_const.DEBUG   : 'secondary',
+    djmsg_const.INFO    : 'info',
+    djmsg_const.SUCCESS : 'success',
+    djmsg_const.WARNING : 'warning',
+}
+
+
+### email backend
+### https://docs.djangoproject.com/en/6.0/topics/email/
+EMAIL_BACKEND       = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST          = "smtp.gmail.com"
+EMAIL_PORT          = 587
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASS')
+
+
+# End of settings.py
+
