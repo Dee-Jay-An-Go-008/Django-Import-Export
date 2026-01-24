@@ -1,0 +1,5 @@
+
+Use these commands in terminal to create this project:
+
+django-admin startproject djadmin_config .
+
