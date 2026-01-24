@@ -5,10 +5,14 @@ from django.db import models
 class UserHair (models.Model) :
     hair_color  = models.CharField (max_length=20, blank=True, null=True)
     hair_type   = models.CharField (max_length=20, blank=True, null=True)
+    def __str__ (self) : 
+        return self.hair_color + '  ' + self.hair_type
 
 class Coordinate (models.Model) :
     latitude    = models.FloatField(blank=True, null=True)
     longitude   = models.FloatField(blank=True, null=True)
+    def __str__ (self) : 
+        return str(self.latitude) + '  ' + str(self.longitude)
 
 class Address (models.Model) :
     address_line    = models.CharField (max_length=200, blank=True, null=True)
@@ -18,12 +22,16 @@ class Address (models.Model) :
     postal_code     = models.CharField (max_length=25, blank=True, null=True)
     coordinate      = models.ForeignKey(Coordinate, on_delete=models.DO_NOTHING, blank=True, null=True)
     country         = models.CharField (max_length=200, blank=True, null=True)
+    def __str__ (self) : 
+        return self.address_line + '  ' + self.city
 
 class Company (models.Model) :
     department  = models.CharField (max_length=200, blank=True, null=True)
     name        = models.CharField (max_length=200, blank=True, null=True)
     title       = models.CharField (max_length=200, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
+    def __str__ (self) : 
+        return self.name + '  ' + self.department
 
 class UserData (models.Model):
     first_name  = models.CharField (max_length=200, blank=True, null=True)
@@ -45,7 +53,5 @@ class UserData (models.Model):
     ip          = models.CharField (max_length=42, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
     company     = models.ForeignKey(Company, on_delete=models.DO_NOTHING, blank=True, null=True)
-
-
-
-
+    def __str__ (self) : 
+        return self.first_name + '  ' + self.last_name

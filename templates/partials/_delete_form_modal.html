@@ -1,0 +1,63 @@
+
+<!-- modal.js -->
+<script>
+  $(document).ready(function () {
+    $("#confirmDeleteFormModal").on("shown.bs.modal", function (event) {
+      // Get the anchor element that triggered the modal
+      var button = $(event.relatedTarget);
+
+      // Extract the value from the 'data-url' attribute of the trigger button
+      var urlValue = button.data("url");
+
+      // Find the specific link within the modal and 
+      // update its 'href' or 'action' attribute
+      // var modalLink = $(this).find('#modal-dynamic-link');
+      // modalLink.attr("href", urlValue);
+      // or 
+      // modalLink.attr("action", urlValue);
+
+      $("#confirmDeleteFormForm").attr("action", urlValue);
+    });
+  });
+</script>
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="confirmDeleteFormModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="confirmDeleteFormModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteFormModalLabel">
+          Confirm Deletion
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <form action="#" method="post" id="confirmDeleteFormForm">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end delete modal -->

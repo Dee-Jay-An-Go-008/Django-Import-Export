@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+<!-- after using the collectstatic command -->
+{% load static %}
+
+<!-- load humanize -->
+{% load humanize %}
+
+<!-- webpage tab title -->
+{% block title %}Import Export{% endblock %}
+
+<!-- main content -->
+{% block content %}
+
+<div class="container" style="height: 225px">
+<!-- djmsg -->
+{% include 'partials/_djmsg.html' %}
+
+<br>
+
+<div class="container text-center">
+<form action="{% url 'app_import_export:djep_import_data' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary mb-3">Import Data</button>
+</form>
+</div>
+
+<!-- form moved to modal for delete data -->
+<div class="text-center">
+  <button
+    class="btn btn-danger mb-3"
+    data-url="{% url 'app_import_export:djep_clear_data' %}"
+    data-toggle="modal"
+    data-target="#confirmDeleteFormModal"
+    data-id="0"
+  >
+    Delete Data
+  </button>
+</div>
+
+</div>
+
+<!-- delete form modal -->
+{% include 'partials/_delete_form_modal.html' %}
+
+<!-- end block content -->
+{% endblock %}

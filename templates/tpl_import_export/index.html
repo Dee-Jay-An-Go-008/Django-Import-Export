@@ -12,22 +12,21 @@
 <!-- main content -->
 {% block content %}
 
-<br>
+<div class="container" style="height: 225px">
+  <!-- djmsg -->
+  {% include 'partials/_djmsg.html'%}
 
-<div class="container text-center">
-<form action="{% url 'app_import_export:djep_import' %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-primary mb-3">Import Data</button>
-</form>
+  <br>
+
+  <div class="container text-center">
+  <h1>
+    <a href="{% url 'app_import_export:djep_import' %}" style="text-decoration:none;"><i class="fas fa-file-import"></i>&nbsp;Import</a>
+    &nbsp;  &nbsp; 
+    <a href="{% url 'app_import_export:djep_export' %}" style="text-decoration:none;"><i class="fas fa-file-export"></i>&nbsp;Export</a>
+  </h1>
+  </div>
+
 </div>
 
-<div class="container text-center">
-<form action="{% url 'app_import_export:djep_import' %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-primary mb-3">Export Data</button>
-</form>
-</div>
-
-<br>
 <!-- end block content -->
 {% endblock %}

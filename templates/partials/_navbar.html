@@ -1,7 +1,7 @@
 {% load static %}
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary sticky-top">
   <div class="container">
     <a class="navbar-brand" href={% url 'app_import_export:djep_index' %}>
       <img src={% static "img/logo.png" %} class="logo" alt="" />
@@ -16,6 +16,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <ul class="navbar-nav">
+        <!-- Home nav link -->
         <li 
           {% if '/' == request.path or '/index' == request.path %} 
             class="nav-item active mr-3"
@@ -24,44 +25,38 @@
           {% endif %}
         >
           <!-- <a class="nav-link" href="index.html">Home</a> -->
-          <a class="nav-link" href={% url 'app_import_export:djep_index' %}>Home</a>
+          <a class="nav-link" href={% url 'app_import_export:djep_index' %}>
+            <i class="fas fa-home"></i>&nbsp;Home</a>
         </li>
-        {% comment %} <li class="nav-item mr-3"> {% endcomment %}
+        <!-- Import nav link -->
         <li 
-          {% if '/about' == request.path %} 
+          {% if 'import' in request.path %} 
             class="nav-item active mr-3"
           {% else %}
             class="nav-item mr-3"
           {% endif %}
         >
           <!-- <a class="nav-link" href="about.html">About</a> -->
-          <a class="nav-link" href={% url 'app_import_export:djep_index' %}>About</a>
+          <a class="nav-link" href={% url 'app_import_export:djep_import' %}>
+            <i class="fas fa-file-import"></i>&nbsp;Import</a>
         </li>
-        {% comment %} <li class="nav-item mr-3"> {% endcomment %}
+        <!-- Export nav link -->
         <li 
-          {% if '/listings/' == request.path %} 
+          {% if 'export' in request.path %} 
             class="nav-item active mr-3"
           {% else %}
             class="nav-item mr-3"
           {% endif %}
         >
-          {% comment %} <a class="nav-link" href="listings.html">Inpatient medical services</a> {% endcomment %}
-          <a class="nav-link" href={% url 'app_import_export:djep_index' %}>Inpatient medical services</a>
+          <a class="nav-link" href={% url 'app_import_export:djep_export' %}>
+            <i class="fas fa-file-export"></i>&nbsp;Export</a>
         </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item mr-3">
-          <!-- fix later -->
-          <a class="nav-link" href="register.html">
-            <i class="fas fa-user-plus"></i> Register</a
-          >
-        </li>
-        <li class="nav-item mr-3">
-          <!-- fix later -->
-          <a class="nav-link" href="login.html">
-            <i class="fas fa-sign-in-alt"></i>
-            Login</a
+          <a class="nav-link" href="/admin">
+            <i class="fas fa-fingerprint"></i>&nbsp;Admin</a
           >
         </li>
       </ul>

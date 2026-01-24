@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+<!-- after using the collectstatic command -->
+{% load static %}
+
+<!-- load humanize -->
+{% load humanize %}
+
+<!-- webpage tab title -->
+{% block title %}Import Export{% endblock %}
+
+<!-- main content -->
+{% block content %}
+
+<div class="container" style="height: 225px">
+
+<!-- djmsg -->
+{% include 'partials/_djmsg.html'%}
+
+<br>
+
+<div class="container text-center">
+<form action="{% url 'app_import_export:djep_export_data' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary mb-3">Export Data</button>
+</form>
+</div>
+
+
+</div>
+
+<!-- end block content -->
+{% endblock %}
