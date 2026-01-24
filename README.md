@@ -12,7 +12,7 @@ git clone https://github.com/Dee-Jay-An-Go-008/Django-Import-Export.git ~/py/dji
 ```
 -----
 
-For Windows computer, use these command:
+For Windows computer, use these commands:
 
 using SSH:
 ```

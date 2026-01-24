@@ -18,7 +18,9 @@ load_dotenv()
 
 # some settings are required only for development
 IS_DEVELOPMENT = True
-IS_USING_DJDT = False
+
+# use DJDT when there are pages in the website
+IS_USING_DJDT = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -201,7 +203,7 @@ MEDIA_URL = '/media/'
 
 
 ## add a location for default data files
-DEFAULT_DATA_ROOT = os.path.join(BASE_DIR, 'default_data')
+DATA_FILES_ROOT = os.path.join(BASE_DIR, 'data_files')
 
 
 ## set project level date string format

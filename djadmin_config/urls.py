@@ -16,7 +16,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+
+### add import for django debug toolbar
+from djadmin_config.settings import IS_DEVELOPMENT
+from djadmin_config.settings import IS_USING_DJDT
+
+### uncomment when using DJDT
+from debug_toolbar.toolbar import debug_toolbar_urls
+
 
 urlpatterns = [
+    path('', include('djapp.djapp_import_export.urls', namespace='app_import_export')),
     path('admin/', admin.site.urls),
 ]
+
+
+if IS_DEVELOPMENT:
+    if IS_USING_DJDT:
+        '''
+        '''
+        ### uncomment when using DJDT
+        urlpatterns += debug_toolbar_urls()
+
+### change title words in django admin pages
+admin.site.site_header = "Import Export Administration"
+admin.site.site_title = "Import Export Admin Portal"
+admin.site.index_title = "Welcome to Import Export Portal"
+

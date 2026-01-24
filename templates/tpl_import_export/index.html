@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+<!-- after using the collectstatic command -->
+{% load static %}
+
+<!-- load humanize -->
+{% load humanize %}
+
+<!-- webpage tab title -->
+{% block title %}Import Data{% endblock %}
+
+<!-- main content -->
+{% block content %}
+
+<br>
+
+<div class="container text-center">
+<form action="{% url 'app_import_export:djep_import' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary mb-3">Import Data</button>
+</form>
+</div>
+
+<div class="container text-center">
+<form action="{% url 'app_import_export:djep_import' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary mb-3">Export Data</button>
+</form>
+</div>
+
+<br>
+<!-- end block content -->
+ {% endblock %}
