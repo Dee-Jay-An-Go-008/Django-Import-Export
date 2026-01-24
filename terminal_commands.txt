@@ -3,3 +3,6 @@ Use these commands in terminal to create this project:
 
 django-admin startproject djadmin_config .
 
+mkdir -p djapp/djapp_import_export
+
+python manage.py startapp djapp_import_export djapp/djapp_import_export
