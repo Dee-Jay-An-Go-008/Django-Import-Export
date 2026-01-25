@@ -16,6 +16,7 @@ from django.contrib import messages
 
 from djapp.utils.utils_import import import_users
 from djapp.utils.utils_import import delete_all_user_data
+from djapp.utils.utils_import import clean_data
 
 from djadmin_config.settings import EXPORT_FILES_URL
 
@@ -41,7 +42,11 @@ def func_clean_data (request):
     '''
     called from import.html
     '''
-    messages.success(request, 'Data Cleaned.')
+    clean_data_flag = clean_data('users_raw.json', 'users_formatted.json')
+    if clean_data_flag:
+        messages.success(request, 'Data Cleaned.')
+    else:
+        messages.error(request, 'Data Not Cleaned.')
     return redirect('app_import_export:djep_import')
 # end def func_clean_data()
 

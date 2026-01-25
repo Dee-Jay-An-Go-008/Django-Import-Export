@@ -8,13 +8,108 @@ from djapp.import_export.models import Address
 from djapp.import_export.models import Company
 from djapp.import_export.models import UserData
 
-import json
+from json import load as json_load
+from json import dump as json_dump
 
 from djadmin_config.settings import DATA_FILES_ROOT
 
 from pathlib import Path
 from os.path import join as os_path_join
 
+
+def clean_data (raw_data_filename, cleaned_data_filename):
+    '''
+    Returns True if file exists.
+    Returns False otherwise.
+    '''
+    raw_data_filename_with_path = os_path_join(DATA_FILES_ROOT, raw_data_filename)
+    cleaned_data_filename_with_path = os_path_join(DATA_FILES_ROOT, cleaned_data_filename)
+
+    file_path = Path(raw_data_filename_with_path)
+
+    if not file_path.exists():
+        return False
+    
+    necessary_key_list = (
+        'firstName',
+        'lastName',
+        'email',
+    )
+
+    upper_lower_key_list = (
+        'firstName',
+        'lastName',
+    )
+    
+    def check_necessary_key (user_dict, key):
+        return key in user_dict
+    
+    def check_necessary_keys (user_dict):
+        flag = True
+
+        for item in necessary_key_list:
+            flag = flag and check_necessary_key(user_dict, item)
+            
+        return flag
+    
+    def check_necessary_value (user_dict, key):
+        try:
+            return user_dict[key]
+        except Exception as e:
+            return False
+
+    def check_necessary_values (user_dict):
+        flag = True
+
+        for item in necessary_key_list:
+            flag = flag and check_necessary_value(user_dict, item)
+            
+        return flag
+
+    def check_user_dict (user_dict) :
+        flag = check_necessary_keys(user_dict)
+
+        if flag:
+            flag = check_necessary_values(user_dict)
+        else:
+            return False
+        
+        return flag
+
+    def check_upper_lower (str) :
+        if str == str.upper():
+            return str.capitalize()
+        if str == str.lower():
+            return str.capitalize()
+        return str
+    
+    def fix_upper_lower (user_dict):
+        for item in upper_lower_key_list:
+            user_dict[item] = check_upper_lower(user_dict[item])
+    
+    with open(raw_data_filename_with_path, 'r') as file:
+        data = json_load(file)
+    
+    users = data['users']
+
+    clean_users = []
+    
+    for user in users:
+        if check_user_dict(user):
+            # user has necessary fields
+            # fix upper/lower
+            fix_upper_lower(user)
+            clean_users.append(user)
+
+    # write clean_users to target file
+    # json
+    json_users_dict_list = {'users':clean_users}
+
+    with open(cleaned_data_filename_with_path, 'w') as json_file:
+        json_dump(json_users_dict_list, json_file, indent=4)
+    
+    return True
+# end def clean_data()
 
 def import_users (filename) :
     '''
@@ -30,7 +125,7 @@ def import_users (filename) :
         return False
 
     with open(filename_with_path, 'r') as file:
-        data = json.load(file)
+        data = json_load(file)
     
     users = data['users']
     
@@ -188,17 +283,18 @@ def delete_all_user_data ():
     Clear table.
     Returns deleted record count.
     '''
+    DEBUG_FUNCTION = False
     count = 0
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     count += delete_user_data()
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     count += delete_company()
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     count += delete_address()
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     count += delete_coordinate()
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     count += delete_user_hair()
-    print(f"delete_all_user_data() {count = }")
+    print(f"delete_all_user_data() {count = }") if DEBUG_FUNCTION else 0
     return count
 # end def delete_all_user_data()

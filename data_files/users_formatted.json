@@ -1,26 +1,9 @@
 {
     "users": [
         {
-            "firstName": "A"
-        },
-        {
-            "firstName": "A",
-            "lastName": "B"
-        },
-        {
-            "firstName": "A",
-            "lastName": "B",
-            "maidenName": "Smith",
-            "age": 29,
-            "gender": "female",
-            "email": "",
-            "password": "emilyspass",
-            "birthDate": "1996-5-30"
-        },
-        {
             "id": 1,
-            "firstName": "EMILY",
-            "lastName": "johnson",
+            "firstName": "Emily",
+            "lastName": "Johnson",
             "maidenName": "Smith",
             "age": 29,
             "gender": "female",
@@ -2117,8 +2100,5 @@
             },
             "role": "user"
         }
-    ],
-    "total": 208,
-    "skip": 0,
-    "limit": 30
+    ]
 }
