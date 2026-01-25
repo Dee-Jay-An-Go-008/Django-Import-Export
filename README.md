@@ -1,33 +1,34 @@
 # Django Import Export Project
 
-Links:
-SSH:
+## Links:
+
+### SSH:
 ```
 git@github.com:Dee-Jay-An-Go-008/Django-Import-Export.git
 ```
-HTTPS:
+### HTTPS:
 ```
 https://github.com/Dee-Jay-An-Go-008/Django-Import-Export.git
 ```
------
-Please use git clone to create a project folder in your computer.
+---
+## Please use git clone to create a project folder in your computer.
 
-using SSH:
+### using SSH:
 ```
 git clone git@github.com:Dee-Jay-An-Go-008/Django-Import-Export.git ~/py/djimpexp
 ```
-using HTTPS:
+### using HTTPS:
 ```
 git clone https://github.com/Dee-Jay-An-Go-008/Django-Import-Export.git ~/py/djimpexp
 ```
------
-For Windows computer, use these commands:
+---
+## For Windows computer, use these commands:
 
-using SSH:
+### using SSH:
 ```
 git clone git@github.com:Dee-Jay-An-Go-008/Django-Import-Export.git C:\py\djimpexp
 ```
-using HTTPS:
+### using HTTPS:
 ```
 git clone https://github.com/Dee-Jay-An-Go-008/Django-Import-Export.git C:\py\djimpexp
 ```
