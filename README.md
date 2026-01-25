@@ -1,5 +1,7 @@
 # Django Import Export Project
 
+## CT290DS008 Individual Project by George Hoi Chi Chang 張凱之 (12)
+
 ## Links:
 
 ### SSH:
