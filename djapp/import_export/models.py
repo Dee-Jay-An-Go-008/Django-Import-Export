@@ -5,12 +5,28 @@ from django.db import models
 class UserHair (models.Model) :
     hair_color  = models.CharField (max_length=20, blank=True, null=True)
     hair_type   = models.CharField (max_length=20, blank=True, null=True)
+    def fields_list ():
+        '''
+        Returns a list of field names.
+        '''
+        return [
+            'hair_color',
+            'hair_type',
+        ]
     def __str__ (self) : 
         return self.hair_color + '  ' + self.hair_type
 
 class Coordinate (models.Model) :
     latitude    = models.FloatField(blank=True, null=True)
     longitude   = models.FloatField(blank=True, null=True)
+    def fields_list ():
+        '''
+        Returns a list of field names.
+        '''
+        return [
+            'latitude',
+            'longitude',
+        ]
     def __str__ (self) : 
         return str(self.latitude) + '  ' + str(self.longitude)
 
@@ -22,6 +38,19 @@ class Address (models.Model) :
     postal_code     = models.CharField (max_length=25, blank=True, null=True)
     coordinate      = models.ForeignKey(Coordinate, on_delete=models.DO_NOTHING, blank=True, null=True)
     country         = models.CharField (max_length=200, blank=True, null=True)
+    def fields_list ():
+        '''
+        Returns a list of field names.
+        '''
+        return [
+            'address_line',
+            'city',
+            'state',
+            'state_code',
+            'postal_code',
+            'coordinate',
+            'country',
+        ]
     def __str__ (self) : 
         return self.address_line + '  ' + self.city
 
@@ -30,6 +59,16 @@ class Company (models.Model) :
     name        = models.CharField (max_length=200, blank=True, null=True)
     title       = models.CharField (max_length=200, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
+    def fields_list ():
+        '''
+        Returns a list of field names.
+        '''
+        return [
+            'department',
+            'name',
+            'title',
+            'address',
+        ]
     def __str__ (self) : 
         return self.name + '  ' + self.department
 
@@ -53,5 +92,39 @@ class UserData (models.Model):
     ip          = models.CharField (max_length=42, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
     company     = models.ForeignKey(Company, on_delete=models.DO_NOTHING, blank=True, null=True)
+    # def foreign_key_list ():
+    #     '''
+    #     Returns a list of foreign key names.
+    #     '''
+    #     return [
+    #         'hair',
+    #         'address',
+    #         'company',
+    #     ]
+    def fields_list ():
+        '''
+        Returns a list of field names.
+        '''
+        return [
+            'first_name',
+            'last_name',
+            'maiden_name',
+            'age',
+            'gender',
+            'email',
+            'phone',
+            'username',
+            'password',
+            'birth_date',
+            'image',
+            'blood_group',
+            'height',
+            'weight',
+            'eye_color',
+            'hair',
+            'ip',
+            'address',
+            'company',
+        ]
     def __str__ (self) : 
         return self.first_name + '  ' + self.last_name

@@ -5,9 +5,9 @@ django-admin startproject djadmin_config .
 
 mkdir -p config/static
 
-mkdir -p djapp/djapp_import_export
+mkdir -p djapp/import_export
 
-python manage.py startapp djapp_import_export djapp/djapp_import_export
+python manage.py startapp import_export djapp/import_export
 
 # create PostgreSQL database
 

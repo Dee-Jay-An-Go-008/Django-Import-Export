@@ -4,7 +4,7 @@
 
 from collections.abc import MutableMapping
 
-def flatten(dictionary, parent_key='', separator='_'):
+def flatten(dictionary, parent_key='', separator='__'):
     items = []
     for key, value in dictionary.items():
         new_key = parent_key + separator + key if parent_key else key

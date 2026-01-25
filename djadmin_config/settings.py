@@ -53,7 +53,7 @@ DJANGO_APPS = [
 
 # project apps
 APPLICATION_APPS = [
-    'djapp.djapp_import_export.apps.DjappImportExportConfig',
+    'djapp.import_export.apps.DjappImportExportConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -83,7 +83,10 @@ else:
 if IS_USING_DJDT:
     DEBUG_MIDDLEWARE = [
         # for django debug toolbar:
-        # The order of MIDDLEWARE is important. You should include the Debug Toolbar middleware as early as possible in the list. However, it must come after any other middleware that encodes the response’s content, such as GZipMiddleware.
+        # The order of MIDDLEWARE is important. You should include the 
+        # Debug Toolbar middleware as early as possible in the list. 
+        # However, it must come after any other middleware that encodes 
+        # the response’s content, such as GZipMiddleware.
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ]
 else:
@@ -206,11 +209,20 @@ MEDIA_URL = '/media/'
 DATA_FILES_ROOT = os.path.join(BASE_DIR, 'data_files')
 
 
+## add a location for default data files
+EXPORT_FILES_ROOT = os.path.join(BASE_DIR, 'export_files')
+EXPORT_FILES_URL = '/export_files/'
+
 ## set project level date string format
 DATE_STRING_FORMAT = '%Y-%m-%d'
 
+## set project level date string format
+DATE_TIME_STRING_FORMAT_FOR_FILENAME = '%Y_%m_%d_%H_%M_%S_%f'
 
-### The Debug Toolbar is shown only if your IP address is listed in Django’s INTERNAL_IPS setting. This means that for local development, you must add "127.0.0.1" to INTERNAL_IPS. You’ll need to create this setting if it doesn’t already exist in your settings module:
+
+### The Debug Toolbar is shown only if your IP address is listed in Django’s INTERNAL_IPS setting. 
+# This means that for local development, you must add "127.0.0.1" to INTERNAL_IPS. 
+# You’ll need to create this setting if it doesn’t already exist in your settings module:
 INTERNAL_IPS = [
     "127.0.0.1",
 ]

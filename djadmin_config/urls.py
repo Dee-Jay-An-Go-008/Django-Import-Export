@@ -22,14 +22,21 @@ from django.urls import include
 from djadmin_config.settings import IS_DEVELOPMENT
 from djadmin_config.settings import IS_USING_DJDT
 
+from djadmin_config.settings import EXPORT_FILES_URL
+from djadmin_config.settings import EXPORT_FILES_ROOT
+
+from django.conf.urls.static import static
+
 ### uncomment when using DJDT
 from debug_toolbar.toolbar import debug_toolbar_urls
 
 
 urlpatterns = [
-    path('', include('djapp.djapp_import_export.urls', namespace='app_import_export')),
+    path('', include('djapp.import_export.urls', namespace='app_import_export')),
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += static(EXPORT_FILES_URL, document_root=EXPORT_FILES_ROOT)
 
 
 if IS_DEVELOPMENT:

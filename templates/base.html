@@ -46,19 +46,16 @@
 <!-- footer -->
 {% include 'partials/_footer.html'%}
 
-{% comment %} original {% endcomment %}
-{% comment %} <!-- javascript -->
-<script src="assets/js/jquery-3.3.1.min.js "></script>
-<script src="assets/js/bootstrap.bundle.min.js "></script>
-<script src="assets/js/main.js "></script> {% endcomment %}
+<!-- delete form modal -->
+{% include 'partials/_delete_form_modal.html' %}
 
-{% comment %} use django directory path {% endcomment %}
 <!-- javascript -->
 <script src={% static "js/jquery-3.3.1.min.js" %}></script>
 <script src={% static "js/bootstrap.bundle.min.js" %}></script>
 <script src={% static "js/lightbox.min.js" %}></script>
 <script src={% static "js/main.js" %}></script>
 <script src={% static "js/msg_fadeout.js" %}></script>
+<script src={% static "js/delete_modal.js" %}></script>
 
 </body>
 

@@ -12,20 +12,29 @@
 <!-- main content -->
 {% block content %}
 
-<div class="container" style="height: 225px">
+<div class="container" style="height: 218px" id="block_content_div_id">
 
 <!-- djmsg -->
 {% include 'partials/_djmsg.html'%}
 
-<br>
+<div class="container text-center mb-2"></div>
 
 <div class="container text-center">
-<form action="{% url 'app_import_export:djep_export_data' %}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-primary mb-3">Export Data</button>
-</form>
-</div>
+  <form action="{% url 'app_import_export:djep_export_data' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary mb-3">Export Data</button>
+  </form>
 
+  {% if export_record_count %}
+    {% if json_filename_url %}
+    <a href="{{ json_filename_url }}">JSON File</a>
+    {% endif %}
+    <br><br>
+    {% if csv_filename_url %}
+    <a href="{{ csv_filename_url }}">CSV File</a>
+    {% endif %}
+  {% endif %}
+</div>
 
 </div>
 

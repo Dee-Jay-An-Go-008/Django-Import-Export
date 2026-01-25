@@ -12,24 +12,31 @@
 <!-- main content -->
 {% block content %}
 
-<div class="container" style="height: 225px">
+<div class="container" style="height: 218px" id="block_content_div_id">
 <!-- djmsg -->
 {% include 'partials/_djmsg.html' %}
 
-<br>
+<div class="container text-center mb-2"></div>
+
+<div class="container text-center">
+<form action="{% url 'app_import_export:djep_clean_data' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-info mb-2">Clean Data</button>
+</form>
+</div>
 
 <div class="container text-center">
 <form action="{% url 'app_import_export:djep_import_data' %}" method="post">
   {% csrf_token %}
-  <button type="submit" class="btn btn-primary mb-3">Import Data</button>
+  <button type="submit" class="btn btn-primary mb-2">Import Data</button>
 </form>
 </div>
 
 <!-- form moved to modal for delete data -->
 <div class="text-center">
   <button
-    class="btn btn-danger mb-3"
-    data-url="{% url 'app_import_export:djep_clear_data' %}"
+    class="btn btn-danger mb-2"
+    data-url="{% url 'app_import_export:djep_delete_data' %}"
     data-toggle="modal"
     data-target="#confirmDeleteFormModal"
     data-id="0"
@@ -39,9 +46,6 @@
 </div>
 
 </div>
-
-<!-- delete form modal -->
-{% include 'partials/_delete_form_modal.html' %}
 
 <!-- end block content -->
 {% endblock %}
