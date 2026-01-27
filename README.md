@@ -2,7 +2,7 @@
 
 ## CT290DS008 Individual Project by George Hoi Chi Chang 張凱之 (12)
 
-### URL of this project:
+### URL to this project:
 
 ```
 https://github.com/Dee-Jay-An-Go-008/Django-Import-Export?programmer=__(12)__
