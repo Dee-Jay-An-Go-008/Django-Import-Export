@@ -193,3 +193,9 @@ cython_debug/
 ### local program lock files
 .~lock.*
 
+### cleaned data file
+data_files/users_formatted.json
+
+### exported data file
+export_files/userdata_*.csv
+export_files/userdata_*.json
