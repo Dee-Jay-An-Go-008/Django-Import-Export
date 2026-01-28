@@ -40,13 +40,23 @@ def export_files () :
     def get_user_hair_dict (pk_id) :
         obj_instance = UserHair.objects.filter(pk=pk_id)[0]
         obj_dict = model_to_dict(obj_instance, fields=UserHair.fields_list())
-        return obj_dict
+        # replace with custom field names
+        obj_dict_with_custom_field_names = {}
+        for k, v in obj_dict.items():
+            new_field_name = UserHair.custom_field_names[k]
+            obj_dict_with_custom_field_names[new_field_name] = v
+        return obj_dict_with_custom_field_names
     # end def get_user_hair_dict()
 
     def get_coordinate_dict (pk_id) :
         obj_instance = Coordinate.objects.filter(pk=pk_id)[0]
         obj_dict = model_to_dict(obj_instance, fields=Coordinate.fields_list())
-        return obj_dict
+        # replace with custom field names
+        obj_dict_with_custom_field_names = {}
+        for k, v in obj_dict.items():
+            new_field_name = Coordinate.custom_field_names[k]
+            obj_dict_with_custom_field_names[new_field_name] = v
+        return obj_dict_with_custom_field_names
     # end def get_coordinate_dict()
 
     def get_address_dict (pk_id) :
@@ -54,7 +64,12 @@ def export_files () :
         obj_dict = model_to_dict(obj_instance, fields=Address.fields_list())
         # replace Coordinate
         obj_dict['coordinate'] = get_coordinate_dict(obj_dict['coordinate'])
-        return obj_dict
+        # replace with custom field names
+        obj_dict_with_custom_field_names = {}
+        for k, v in obj_dict.items():
+            new_field_name = Address.custom_field_names[k]
+            obj_dict_with_custom_field_names[new_field_name] = v
+        return obj_dict_with_custom_field_names
     # end def get_address_dict()
 
     def get_company_dict (pk_id) :
@@ -62,7 +77,12 @@ def export_files () :
         obj_dict = model_to_dict(obj_instance, fields=Company.fields_list())
         # replace Address
         obj_dict['address'] = get_address_dict(obj_dict['address'])
-        return obj_dict
+        # replace with custom field names
+        obj_dict_with_custom_field_names = {}
+        for k, v in obj_dict.items():
+            new_field_name = Company.custom_field_names[k]
+            obj_dict_with_custom_field_names[new_field_name] = v
+        return obj_dict_with_custom_field_names
     # end def get_company_dict()
 
     def get_user_data_dict (obj_instance):
@@ -73,7 +93,12 @@ def export_files () :
         obj_dict['address'] = get_address_dict(obj_dict['address'])
         # replace Company
         obj_dict['company'] = get_company_dict(obj_dict['company'])
-        return obj_dict
+        # replace with custom field names
+        obj_dict_with_custom_field_names = {}
+        for k, v in obj_dict.items():
+            new_field_name = UserData.custom_field_names[k]
+            obj_dict_with_custom_field_names[new_field_name] = v
+        return obj_dict_with_custom_field_names
     # end def get_user_data_dict()
 
     def get_all_users_dict_list () :

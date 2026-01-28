@@ -5,6 +5,11 @@ from django.db import models
 class UserHair (models.Model) :
     hair_color  = models.CharField (max_length=20, blank=True, null=True)
     hair_type   = models.CharField (max_length=20, blank=True, null=True)
+    ## for export
+    custom_field_names = {
+        'hair_color' : 'color',
+        'hair_type' : 'type',
+    }
     def fields_list ():
         '''
         Returns a list of field names.
@@ -19,6 +24,11 @@ class UserHair (models.Model) :
 class Coordinate (models.Model) :
     latitude    = models.FloatField(blank=True, null=True)
     longitude   = models.FloatField(blank=True, null=True)
+    ## for export
+    custom_field_names = {
+        'latitude' : 'lat',
+        'longitude' : 'lng',
+    }
     def fields_list ():
         '''
         Returns a list of field names.
@@ -38,6 +48,16 @@ class Address (models.Model) :
     postal_code     = models.CharField (max_length=25, blank=True, null=True)
     coordinate      = models.ForeignKey(Coordinate, on_delete=models.DO_NOTHING, blank=True, null=True)
     country         = models.CharField (max_length=200, blank=True, null=True)
+    ## for export
+    custom_field_names = {
+        'address_line' : 'address',
+        'city' : 'city',
+        'state' : 'state',
+        'state_code' : 'stateCode',
+        'postal_code' : 'postalCode',
+        'coordinate' : 'coordinates',
+        'country' : 'country',
+    }
     def fields_list ():
         '''
         Returns a list of field names.
@@ -59,6 +79,13 @@ class Company (models.Model) :
     name        = models.CharField (max_length=200, blank=True, null=True)
     title       = models.CharField (max_length=200, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
+    ## for export
+    custom_field_names = {
+        'department' : 'department',
+        'name' : 'name',
+        'title' : 'title',
+        'address' : 'address',
+    }
     def fields_list ():
         '''
         Returns a list of field names.
@@ -92,6 +119,28 @@ class UserData (models.Model):
     ip          = models.CharField (max_length=42, blank=True, null=True)
     address     = models.ForeignKey(Address, on_delete=models.DO_NOTHING, blank=True, null=True)
     company     = models.ForeignKey(Company, on_delete=models.DO_NOTHING, blank=True, null=True)
+    ## for export
+    custom_field_names = {
+        'first_name' : 'firstName',
+        'last_name' : 'lastName',
+        'maiden_name' : 'maidenName',
+        'age' : 'age',
+        'gender' : 'gender',
+        'email' : 'email',
+        'phone' : 'phone',
+        'username' : 'username',
+        'password' : 'password',
+        'birth_date' : 'birthDate',
+        'image' : 'image',
+        'blood_group' : 'bloodGroup',
+        'height' : 'height',
+        'weight' : 'weight',
+        'eye_color' : 'eyeColor',
+        'hair' : 'hair',
+        'ip' : 'ip',
+        'address' : 'address',
+        'company' : 'company',
+    }
     # def foreign_key_list ():
     #     '''
     #     Returns a list of foreign key names.
